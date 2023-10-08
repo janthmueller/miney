@@ -18,7 +18,7 @@ bot = lightbulb.BotApp(token = discord_token, default_enabled_guilds = default_e
 async def on_started(event):
     print(f"Started bot.")
     
-bot.load_extension_from("./extensions")
+bot.load_extensions_from("./extensions")
 
 if __name__ == '__main__':
     bot.run()
