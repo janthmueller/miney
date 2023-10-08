@@ -12,7 +12,9 @@ valid_user_ids = eval(os.getenv('VALID_USER_IDS'))
 @lightbulb.command("start-server", "Starts the Minecraft server.", auto_defer=True)
 @lightbulb.implements(lightbulb.SlashCommand)
 async def start_server(ctx):
-    if is_server_running():
+    if ctx.interaction.user.id not in valid_user_ids:
+        await ctx.respond("You do not have permission to use this command.")
+    elif is_server_running():
         await ctx.respond("Server is already running.")
     else:
         # Use os.path.expanduser to expand the tilde to the home directory
@@ -50,8 +52,6 @@ def is_server_running():
             return True
     return False
 
-
-    
 
 def load(bot):
     bot.add_plugin(plugin)
