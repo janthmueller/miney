@@ -7,10 +7,10 @@ load_dotenv()
 
 discord_token = os.getenv('DISCORD_TOKEN')
 
-try:
-    default_enabled_guild = eval(os.getenv('DEFAULT_ENABLED_GUILD'))
-except:
-    default_enabled_guild = None
+
+
+default_enabled_guild = eval(os.getenv('DEFAULT_ENABLED_GUILD'))
+
 
 bot = lightbulb.BotApp(token = discord_token, default_enabled_guilds = default_enabled_guild)
 
