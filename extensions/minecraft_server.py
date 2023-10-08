@@ -11,7 +11,7 @@ async def start_server(ctx):
     if is_server_running():
         await ctx.respond("Server is already running.")
     else:
-        subprocess.run(["sudo", "java", "-Xmx1024M", "-Xms1024M", "-jar", "server.jar", "nogui"])
+        subprocess.run(["sudo", "java", "-Xmx1024M", "-Xms1024M", "-jar", "~/minecraft_server/server.jar", "nogui"])
     
 
 @plugin.command()
