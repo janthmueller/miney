@@ -1,10 +1,12 @@
 import lightbulb
 import psutil
-import subprocess
+import asyncio
 import os
 
 plugin = lightbulb.Plugin("minecraft_server")
 valid_user_ids = eval(os.getenv('VALID_USER_IDS'))
+
+
 
 @plugin.command()
 @lightbulb.command("start-server", "Starts the Minecraft server.", auto_defer=True)
@@ -14,7 +16,7 @@ async def start_server(ctx):
         await ctx.respond("Server is already running.")
     else:
         # Use os.path.expanduser to expand the tilde to the home directory
-        jar_path = os.path.expanduser("~/minecraft_server/")
+        jar_path = os.path.expanduser("~/minecraft_server/server.jar")
 
         # Get the directory of the jar file
         jar_directory = os.path.dirname(jar_path)
@@ -22,8 +24,15 @@ async def start_server(ctx):
         # Change the working directory to the jar file's directory
         os.chdir(jar_directory)
 
-        # Run the subprocess in the updated working directory
-        subprocess.run(["sudo", "java", "-Xmx1024M", "-Xms1024M", "-jar", "server.jar", "nogui"])
+        # Use asyncio.create_subprocess_exec to run the subprocess asynchronously
+        process = await asyncio.create_subprocess_exec(
+            "sudo", "java", "-Xmx1024M", "-Xms1024M", "-jar", "server.jar", "nogui",
+            stdout=asyncio.subprocess.PIPE,
+            stderr=asyncio.subprocess.PIPE
+        )
+
+        # Respond to the Discord message
+        await ctx.respond("Server starting in the background.")
     
 
 @plugin.command()
