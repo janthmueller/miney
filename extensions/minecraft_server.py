@@ -13,7 +13,9 @@ async def start_server(ctx):
     if is_server_running():
         await ctx.respond("Server is already running.")
     else:
-        subprocess.run(["sudo", "java", "-Xmx1024M", "-Xms1024M", "-jar", "~/minecraft_server/server.jar", "nogui"])
+        # Use os.path.expanduser to expand the tilde to the home directory
+        jar_path = os.path.expanduser("~/minecraft_server/server.jar")
+        subprocess.run(["sudo", "java", "-Xmx1024M", "-Xms1024M", "-jar", jar_path, "nogui"])
     
 
 @plugin.command()
