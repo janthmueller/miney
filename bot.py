@@ -2,15 +2,13 @@ import hikari
 import lightbulb
 import os
 from dotenv import load_dotenv
+import ast
 
 load_dotenv()
 
 discord_token = os.getenv('DISCORD_TOKEN')
 
-
-
-default_enabled_guild = eval(os.getenv('DEFAULT_ENABLED_GUILD'))
-
+default_enabled_guild = ast.literal_eval(os.getenv('DEFAULT_ENABLED_GUILD'))
 
 bot = lightbulb.BotApp(token = discord_token, default_enabled_guilds = default_enabled_guild)
 
